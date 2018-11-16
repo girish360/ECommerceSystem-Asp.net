@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using ECommerce.Entitiess;
 using ECommerce.Service;
 namespace ECommerce.Web.Controllers
 {
@@ -14,26 +15,29 @@ namespace ECommerce.Web.Controllers
             return View();
         }
 
-        public ActionResult ProductTable()
+        public ActionResult ProductTable(string search)
         {
-            var products = productService.GetProducts(); 
+            var products = productService.GetProducts();
 
-            return View(products);
+            if (!string.IsNullOrEmpty(search))
+            {
+                products = products.Where(p => p.Name !=null && p.Name.ToLower().Contains(search.ToLower())).ToList();
+            }
+            
+
+            return PartialView(products);
         }
 
         [HttpGet]
         public ActionResult Create()
         {
-            
-
-            return PartialView();
+            return View();
         }
-
-        //[HttpPost]
-        //public ActionResult Create()
-        //{
-
-        //    return RedirectToAction("ProductTable");
-        //}
+        [HttpPost]
+        public ActionResult Create(Product product)
+        {
+            productService.SaveProduct(product);
+            return RedirectToAction("Index");
+        }
     }
 }
