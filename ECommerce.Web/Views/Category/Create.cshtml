@@ -16,9 +16,46 @@
                 <label>Description</label>
                 <input class="form-control" name="Description" />
             </div>
+            <div class="form-group">
+                <label>Image</label>
+                <input class="form-control" id="imageUpload" name="Image" type="file" accept=".png , .jpg, .jpeg"/>
+            </div>
         </div>
     </div>
 
     <button id="saveBtn" type="submit" class="btn btn-primary">Save</button>
 </form>
 
+<script>
+    $("#imageUpload").change(function () {
+
+        var element = this;
+        var formdata = new FormData();
+        var totalfiles = element.files.length;
+        for (var i = 0; i < totalfiles; i++) {
+            var file = element.files[i];
+            formData.append("Photo",file);
+
+        }
+
+        $.ajax({
+                type: 'POST',
+                url: '@Url.Action("UploadImage", "Shared")',
+                dataType: 'json',
+                data: formData,
+                contentType: false,
+                processData: false
+            })
+            .done(function (response) {
+                console.log(response);
+
+                if (response.Success) {
+                    $("#ImageURL").val(response.ImageURL);
+                    $("#categoryImage").attr("src", response.ImageURL);
+                }
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("FAIL");
+            });
+    });
+</script>
