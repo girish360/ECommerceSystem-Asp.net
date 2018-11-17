@@ -5,21 +5,16 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
-
 <div>
-    <form method="post" action="/Product/ProductTable">
+    <form method="post">
         <input id="searchTxt" name="Search" />
         <button type="button" id="searchBtn">Search</button>
     </form>
 
-    <button>New</button>
+    <button type="button" id="newBtn">New</button>
 </div>
 
 
-<div>
-    
     <table>
         <thead>
         <tr>
@@ -44,34 +39,27 @@
         }
         </tbody>
     </table>
-</div>
-
 
 
 
 
 <script>
+     $("#searchBtn").click(function () {
+         var searchValue = $("#searchTxt").val();
 
-	
-
-	$("#searchBtn").click(function () {
-		var searchValue = $("#searchTxt").val();
-
-		$.ajax({
-			url: '@Url.Action("ProductTable", "Product")',
-			data: {
-				search: searchValue
-			}
-		})
-        .done(function (response) {
-        	$("#tableContiner").html(response);
-        })
-        .fail(function (XMLHttpRequest, textStatus, errorThrown) {
-        	alert("FAIL");
-        });
-	});
-
-	
+         $.ajax({
+                 url: '/Product/ProductTable',
+                 data: {
+                     search: searchValue
+                 }
+             })
+             .done(function(response) {
+                 $("#tableContiner").html(response);
+             })
+             .fail(function(XMLHttpRequest, textStatus, errorThrown) {
+                 alert("Failed");
+             });
 
 
+     });
 </script>
