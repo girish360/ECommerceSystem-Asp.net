@@ -5,7 +5,7 @@
 
 <h2>Create Product</h2>
 
-<form id="createCategory" method="post">
+<form id="createProduct">
     <div class="row">
         <div class="col-md-8">
             <div class="form-group">
@@ -24,6 +24,27 @@
         </div>
     </div>
 
-    <button id="saveBtn" type="submit" class="btn btn-primary">Save</button>
+    <button id="saveBtn" type="button" class="btn btn-primary">Save</button>
 </form>
 
+<script>
+
+    $("#saveBtn").click(function () {
+
+
+        $.ajax({
+                type:'POST',
+                url: '/Product/Create',
+                data: $("#createProduct").serialize()
+            })
+            .done(function (response) {
+                $("#tableContiner").html(response);
+                $("#actionContainer").html("");
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("Failed");
+            });
+
+
+    });
+</script>

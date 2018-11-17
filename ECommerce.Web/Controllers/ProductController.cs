@@ -30,14 +30,35 @@ namespace ECommerce.Web.Controllers
 
         [HttpGet]
         public ActionResult Create()
-        {
-            return View();
+        { 
+            return PartialView();
         }
         [HttpPost]
         public ActionResult Create(Product product)
         {
             productService.SaveProduct(product);
-            return RedirectToAction("Index");
+            return RedirectToAction("ProductTable");
+        }
+
+        [HttpGet]
+        public ActionResult Edit(int ID)
+        {
+            var product = productService.GetProduct(ID);
+            return PartialView(product);
+        }
+        [HttpPost]
+        public ActionResult Edit(Product product)
+        {
+            productService.UpdateProduct(product);
+            return RedirectToAction("ProductTable");
+        }
+
+
+        [HttpPost]
+        public ActionResult Delete(int ID)
+        {
+            productService.DeleteProduct(ID);
+            return RedirectToAction("ProductTable");
         }
     }
 }
