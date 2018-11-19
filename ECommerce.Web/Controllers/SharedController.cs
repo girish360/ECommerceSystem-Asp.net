@@ -20,7 +20,7 @@ namespace ECommerce.Web.Controllers
 
                 var fileName = Guid.NewGuid() + Path.GetExtension(file.FileName);
 
-                var path = Path.Combine(Server.MapPath("~/content/images/"), fileName);
+                var path = Path.Combine(Server.MapPath("~/Content/images"), fileName);
 
                 file.SaveAs(path);
 
