@@ -30,8 +30,12 @@ namespace ECommerce.Web.Controllers
 
         [HttpGet]
         public ActionResult Create()
-        { 
-            return PartialView();
+        {
+            
+
+            CategoryServices categoryServices = new CategoryServices();
+            var categories = categoryServices.GetCategories();
+            return PartialView(categories);
         }
         [HttpPost]
         public ActionResult Create(Product product)

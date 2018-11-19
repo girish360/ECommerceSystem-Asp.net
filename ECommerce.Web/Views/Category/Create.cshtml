@@ -1,7 +1,7 @@
 ﻿@{
     ViewBag.Title = "Create";
 
-   
+    var imageURL =  "/Content/images/system/placeholder-image.png";
 }
 <h2>Create Category</h2>
 <form id="createCategory" method="post" enctype="multipart/form-data" accept-charset="utf-8">
@@ -29,6 +29,11 @@
                     <div class="radio form-control">
                         <label><input name="isFeatured" type="radio" value="False" /> False</label>
                     </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="thumb">
+                    <img class="img-thumbnail img-fluid" id="categoryImage" src="@imageURL" />
                 </div>
             </div>
         </div>
@@ -60,11 +65,14 @@
         .done(function (response) {
         	console.log(response);
 		        debugger;
-        	if(response.Success)
-        	{
-        		$("#ImageURL").val(response.ImageURL);
-        		$("#categoryImage").attr("src", response.ImageURL);
+        	if (response.Success) {
+	            $("#ImageURL").val(response.ImageURL);
+	            $("#categoryImage").attr("src", response.ImageURL);
         	}
+	        else {
+                alert("Image not uploaded");
+	        }
+             
         })
         .fail(function (XMLHttpRequest, textStatus, errorThrown) {
         	alert("FAIL");
