@@ -29,6 +29,14 @@ namespace ECommerce.Service
             }
         }
 
+        public List<Category> GetFeaturedCategories()
+        {
+            using (var context = new ECommerceDbContext())
+            {
+                return context.Categories.Where(x => x.isFeatured && x.ImageURL != null).ToList();
+            }
+        }
+
         public void SaveCategory(Category category)
         {
             using (var context = new ECommerceDbContext())

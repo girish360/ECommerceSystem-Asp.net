@@ -9,7 +9,7 @@ namespace ECommerce.Entitiess
     public class Product : BaseEntities
     {
         public decimal Price { get; set; }
-        public Category Category { get; set; }
+        public virtual Category Category { get; set; }
  
     }
 }

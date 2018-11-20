@@ -25,7 +25,7 @@ namespace ECommerce.Service
         {
             using (var context = new ECommerceDbContext())
             {
-                return context.Products.ToList();
+                return context.Products.Include(x=>x.Category).ToList();
             }
         }
 
@@ -33,6 +33,7 @@ namespace ECommerce.Service
         {
             using (var context = new ECommerceDbContext())
             {
+                context.Entry(product.Category).State = System.Data.Entity.EntityState.Unchanged;
                 context.Products.Add(product);
                 try
                 {
